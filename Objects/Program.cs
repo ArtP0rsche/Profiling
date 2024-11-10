@@ -1,27 +1,42 @@
-﻿using System;
+﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
+using System;
 
-class Program
+BenchmarkRunner.Run<ObjectsCreator>();
+
+public partial class Program
 {
     static void Main()
     {
-        Console.WriteLine("Starting memory analysis...");
+        //Console.WriteLine("Starting memory analysis...");
 
-        // Создание объектов большой размерности
-        CreateLargeObjects();
+        //ObjectsCreator creator = new ObjectsCreator(); 
 
-        // Создание объектов маленькой размерности
-        CreateSmallObjects();
+        //// Создание объектов большой размерности
+        //creator.CreateLargeObjects();
 
-        // Создание объектов типа строк
-        CreateStringObjects();
+        //// Создание объектов маленькой размерности
+        //creator.CreateSmallObjects();
 
-        // Создание списков и коллекций
-        CreateCollections();
+        //// Создание объектов типа строк
+        //creator.CreateStringObjects();
 
-        Console.WriteLine("Memory analysis completed.");
+        //// Создание списков и коллекций
+        //creator.CreateCollections();
+
+
+
+        //Console.WriteLine("Memory analysis completed.");
     }
 
-    static void CreateLargeObjects()
+    
+}
+
+[MemoryDiagnoser]
+public class ObjectsCreator
+{
+    [Benchmark]
+    public void CreateLargeObjects()
     {
         // Создаем большой двухмерный массив
         int[,] largeArray = new int[1000, 1000];
@@ -32,10 +47,11 @@ class Program
                 largeArray[i, j] = i + j;
             }
         }
-        Console.WriteLine("Created large 2D array.");
+        //Console.WriteLine("Created large 2D array.");
     }
 
-    static void CreateSmallObjects()
+    [Benchmark]
+    public void CreateSmallObjects()
     {
         // Создаем много маленьких объектов
         int[] smallArray = new int[100];
@@ -43,19 +59,21 @@ class Program
         {
             smallArray[i] = i;
         }
-        Console.WriteLine("Created small array.");
+        //Console.WriteLine("Created small array.");
     }
 
-    static void CreateStringObjects()
+    [Benchmark]
+    public void CreateStringObjects()
     {
         // Создаем строки разной длины
         string shortString = "Short string";
         string longString = new string('A', 10000); // Длинная строка длиной 10,000 символов
 
-        Console.WriteLine("Created short and long strings.");
+        //Console.WriteLine("Created short and long strings.");
     }
 
-    static void CreateCollections()
+    [Benchmark]
+    public void CreateCollections()
     {
         // Создание списка объектов
         List<int[]> listOfArrays = new List<int[]>();
@@ -76,6 +94,6 @@ class Program
             largeDictionary[i] = new string('B', 1000); // Строка длиной 1000 символов
         }
 
-        Console.WriteLine("Created collections with arrays and dictionary.");
+        //Console.WriteLine("Created collections with arrays and dictionary.");
     }
 }
