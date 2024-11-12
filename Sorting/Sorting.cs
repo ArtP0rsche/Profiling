@@ -1,13 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
+using ReyRom;
+
+BenchmarkRunner.Run<Sorting>();
 
 namespace ReyRom
 {
-    public static class Sorting
+    public class Sorting
     {
+        public int[] Data { get; set; }
+        [Params(0)]
+        public int Left { get; set; }
+        [Params(100)]
+        public int Right { get; set; }
+
+        [Benchmark]
+        public void RunBubbleSort()
+        {
+            BubbleSort(Data);
+        }
+
+        [Benchmark]
+        public void RunQuickSort()
+        {
+            QuickSort(Data, Left, Right);
+        }
+
         public static void BubbleSort(int[] data)
         {
             for (int i = 0; i < data.Length - 1; i++)
@@ -23,6 +41,7 @@ namespace ReyRom
                 }
             }
         }
+
         public static void QuickSort(int[] data, int left, int right)
         {
             int i = left, j = right;
