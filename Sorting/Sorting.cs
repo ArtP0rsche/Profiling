@@ -8,22 +8,26 @@ namespace ReyRom
 {
     public class Sorting
     {
-        public int[] Data { get; set; }
+        [Params(0)]
+        public static int UpperLimit { get; set; }
+        [Params(100)]
+        public static int LowerLimit { get; set; }
         [Params(0)]
         public int Left { get; set; }
         [Params(100)]
         public int Right { get; set; }
+        public int[] data = { UpperLimit, LowerLimit };
 
         [Benchmark]
         public void RunBubbleSort()
         {
-            BubbleSort(Data);
+            BubbleSort(data);
         }
 
         [Benchmark]
         public void RunQuickSort()
         {
-            QuickSort(Data, Left, Right);
+            QuickSort(data, Left, Right);
         }
 
         public static void BubbleSort(int[] data)
